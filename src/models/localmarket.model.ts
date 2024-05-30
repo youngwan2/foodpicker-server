@@ -17,19 +17,28 @@ export class LocalmarketModel {
     }
 
     // 메인 페이지 조회
-    static async getLimitedLocalMarketDataFormDB(page: any) {
-        const db = await openDb()
+    static async getLimitedLocalMarketDataFormDB(page: number, region: { regionShortcut: string, regionFull: string }) {
 
+        const matchRegionFullName = `%${region.regionFull}%`
+        const matchRegionShortName =`%${region.regionShortcut}%`
+        const conditions = [matchRegionFullName, matchRegionShortName]
+
+        const db = await openDb()
+        
         const query = `
-        SELECT * FROM local_markets LIMIT 15 OFFSET 15 * ?
+        SELECT * FROM local_markets 
+        WHERE lcc_address LIKE ? OR  lcc_address LIKE ?
+        LIMIT 15 OFFSET 15 * ?
         `
         const countSelectQuery = `
         SELECT COUNT(*) AS count FROM local_markets
+        WHERE  lcc_address LIKE ? OR  lcc_address LIKE ?
         `
-        const items = await db.all(query, [page])
-        const {count:totalCount} = await db.get(countSelectQuery) || {count:0}
-        const maxSize = Math.ceil(totalCount/VIEW_POST_COUNT)
+        const items = await db.all(query, [...conditions, page])
+        const { count: totalCount } = await db.get(countSelectQuery, conditions) || { count: 0 }
+        const maxSize = Math.ceil(totalCount / VIEW_POST_COUNT)
         db.close()
+
         return { maxSize, items, totalCount }
     }
 }

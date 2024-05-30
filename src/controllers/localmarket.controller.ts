@@ -18,10 +18,15 @@ export class LocalMarketController {
     // 메인 페이지
     static async getLocalMarketData(req: Request, res: Response) {
         try {
-            const page = req.query.page || 0
+            const page = Number(req.query.page) || 0
+            const region = req.query.region?.toString().split(',') || ['']
+            const regionShortcut = region[0]
+            const regionFull = region[1]
             const nextPage = Number(page) + 1
-            const { items, maxSize, totalCount } = await LocalmarketModel.getLimitedLocalMarketDataFormDB(page) || { result: '', count: 0 }
-            const isNextPage = maxSize > Number(page)
+
+            const { items, maxSize, totalCount } = await LocalmarketModel.getLimitedLocalMarketDataFormDB(page, {regionShortcut, regionFull}) || { result: '', count: 0 }
+            
+            const isNextPage = maxSize >= Number(page)
             const next = isNextPage ? API_PREFIX + API_HOST + '/localmarkets?page=' + nextPage : null
             return res.status(200).json({ items, totalCount, next })
 
