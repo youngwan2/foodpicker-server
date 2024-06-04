@@ -14,8 +14,6 @@ export class LocalfoodModel {
         try {
             const result = await db.get(query, [id])
             db.close()
-
-            console.log("로컬 푸드 결과:", result)
             return result
         } catch (error) {
             console.error('models/localfood.model.ts 디비 조회 실패:', error)

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { LocalmarketModel } from "../models/localmarket.model";
-const { API_HOST, API_PREFIX } = process.env as { API_HOST: 'localhost:3000', API_PREFIX: 'http://' }
+const { API_HOST='localhost:3000', API_RPOTOCOL='http://' } = process.env 
 
 export class LocalMarketController {
     // 세부 페이지
@@ -27,7 +27,7 @@ export class LocalMarketController {
             const { items, maxSize, totalCount } = await LocalmarketModel.getLimitedLocalMarketDataFormDB(page, {regionShortcut, regionFull}) || { result: '', count: 0 }
             
             const isNextPage = maxSize >= Number(page)
-            const next = isNextPage ? API_PREFIX + API_HOST + '/localmarkets?page=' + nextPage : null
+            const next = isNextPage ? API_RPOTOCOL + API_HOST + '/localmarkets?page=' + nextPage : null
             return res.status(200).json({ items, totalCount, next })
 
         } catch (error) {

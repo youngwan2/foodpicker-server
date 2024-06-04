@@ -15,7 +15,8 @@ const app = express();
 const __path = path.join(__dirname, 'build', 'index.html');
 
 /* 미들웨어  */
-app.use(cors({ origin: '*' }));
+const domains = ['http://localhost:8080', 'https://foodpick.co.kr']
+app.use(cors({ origin: domains }));
 app.use('/', express.static(path.join(__dirname, '/build')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
