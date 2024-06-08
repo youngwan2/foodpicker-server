@@ -1,13 +1,14 @@
-import type { Response, Request } from 'express';
 
 require('dotenv').config();
-import express from 'express';
+
+import express, { Request, Response } from 'express';
 import path from 'path';
 import cors from 'cors';
 import localfood from './routes/localfood.router';
 import localmarket from './routes/localmarket.router';
 import nutrtion from './routes/nutrtion.router';
 import naver from './routes/naver.router';
+import traditionalfood from './routes/traditionalfood.router'
 
 const app = express();
 
@@ -22,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // 라우터
-const routes = [localfood, localmarket, nutrtion, naver];
+const routes = [localfood, localmarket, nutrtion, naver, traditionalfood];
 
 routes.forEach((router) => {
   app.use('/', router);

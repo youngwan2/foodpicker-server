@@ -1,9 +1,12 @@
 import express from 'express'
 import { NaverController } from '../controllers/naver.controller'
+import { container } from '../Inversify.config'
 
 const router = express.Router()
 
-router.get('/naver-search', NaverController.getSearchResultByKeyword)
+const NaverContainer = container.get<NaverController>(NaverController)
+
+router.get('/naver-search', NaverContainer.getSearchResultByKeyword)
 
 
 export default router

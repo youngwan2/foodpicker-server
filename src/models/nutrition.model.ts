@@ -1,26 +1,41 @@
 
-import openDb from '../db/dbConnection'
+import { injectable } from 'inversify';
+import { dbOpen } from '../db/dbConnection';
+import { stringToArray } from '../utils/helper';
 
-export class NutritionModel{
+@injectable()
+export class NutritionModel {
 
-    static async getNutritionDataFromDB(page:number, keyword:string){
-        const db = await openDb();
-        const query =`
-        SELECT id, PRODUCT_NAME, PRODUCT_ORIGIN_NAME, BASE_QY, KCAL_QY, PROTEIN_QY, FAT_QY, CARBOH_QY, SUGAR_QY, DIETARY_FIBER_QY, CALCIUM_QY, IRON_QY, PHOSPHORUS_QY, POTASSIUM_QY, NATRIUM_QY, VITAMIN_A_QY, B_CAROTENE_QY, THIAMIN, VITAMIN_B2_QY, VITAMIN_B3_QY, VITAMIN_C_QY, VITAMIN_D_QY, CHOLESTEROL_QY, SATURATED_FAT_QY, TRANS_FAT_QY, DATA_ORIGIN, FOOD_WEIGHT, CREATION_DATE, BASE_DATE    
-        FROM nutrition
-        WHERE PRODUCT_NAME LIKE ?
+  async getNutritionDataFromDB(page: number, name: string = '', companyName: string = '', foodType: string = '가공식품,음식', kcal: { minKcal: number, maxKcal: number }) {
+
+        const hasCompany = companyName.length >= 2
+        const hasFoodType = foodType.length >= 2
+
+        const compaines = hasCompany ? stringToArray(companyName) : null
+        const foodTypes = hasFoodType ? stringToArray(foodType) : stringToArray('가공식품,음식')
+
+        // 바인딩용 ? memo: 맵핑 ex 상호명 배열의 길이 만큼  ?,?,?,.. 생성
+        const companyPlaceholders = compaines?.map(() => '?').join(',')
+        const foodTypePlaceholders = foodTypes.map(() => '?').join(',')
+
+        const conditions = ['%' + name + '%', ...compaines ?? '', ...foodTypes, kcal.minKcal, kcal.maxKcal]
+
+        const query = `
+        SELECT *
+        FROM nutritions
+        WHERE name LIKE ? AND company_name ${hasCompany ? "IN (" + companyPlaceholders + ")" : "LIKE '%%'"} AND sort IN (${foodTypePlaceholders}) AND kcal_g BETWEEN ? AND ?
         LIMIT 20 OFFSET 20 * ?
         `
-        const countSelectQuery =`
+        const countSelectQuery = `
         SELECT COUNT(*) AS count
-        FROM nutrition
-        WHERE PRODUCT_NAME LIKE ?
+        FROM nutritions
+        WHERE name LIKE ? AND company_name ${hasCompany ? "IN (" + companyPlaceholders + ")" : "LIKE '%%'"} AND sort IN (${foodTypePlaceholders}) AND kcal_g BETWEEN ? AND ?
         `
 
-        const items = await db.all(query, ['%'+keyword+'%', page])
-        const {count:totalCount} = await db.get(countSelectQuery, ['%'+keyword+'%']) || {totalCount : 0}
-        db.close()
-        return {items, totalCount}
+        const items = await dbOpen(true, query, [...conditions, page])
+        const { count: totalCount } = await dbOpen(false, countSelectQuery, conditions) as { count: string } || { totalCount: 0 }
+        
+        return { items, totalCount }
     }
-
 }
+
