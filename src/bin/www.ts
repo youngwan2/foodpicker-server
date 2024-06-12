@@ -1,4 +1,4 @@
-const app = require('../server')
+import app from '../server'
 const PORT = process.env.PORT || 8001
 
 app.listen(PORT,()=>{

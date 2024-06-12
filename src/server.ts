@@ -1,7 +1,7 @@
 
 require('dotenv').config();
 
-import express, { Request, Response } from 'express';
+import express from 'express';
 import path from 'path';
 import cors from 'cors';
 import localfood from './routes/localfood.router';
@@ -13,7 +13,7 @@ import traditionalfood from './routes/traditionalfood.router'
 const app = express();
 
 // 경로설정
-const __path = path.join(__dirname, 'build', 'index.html');
+// const __path = path.join(__dirname, 'build', 'index.html');
 
 /* 미들웨어  */
 const domains = ['http://localhost:8080', 'https://foodpick.co.kr','https://www.foodpick.co.kr']
@@ -29,8 +29,8 @@ routes.forEach((router) => {
   app.use('/', router);
 });
 
-app.get('*', (req: Request, res: Response) => {
-  res.sendFile(__path);
-});
+// app.get('*', (req: Request, res: Response) => {
+//   res.sendFile(__path);
+// });
 
-module.exports = app;
+export default app;
