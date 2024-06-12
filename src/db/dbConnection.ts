@@ -1,5 +1,5 @@
 require('dotenv').config();
-import sqlite from '@journeyapps/sqlcipher'
+import sqlite from 'sqlite3'
 
 
 const sqlite3Verbose = sqlite.verbose()
@@ -15,7 +15,7 @@ function openDb(sqlite3Verbose: sqlite.sqlite3) {
 export const dbOpen = (isAll: boolean, query: string, conditions: (number | string)[]) => {
   const db = openDb(sqlite3Verbose)
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     if (isAll) {
       db.all(query, conditions, (err, rows) => {
         if (err) {
