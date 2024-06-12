@@ -11,25 +11,27 @@ interface PropsType {
 @injectable()
 export class TraditionalFoodModel {
     constructor() { }
-    async getTraditionalFoodCategory({ name, main, sub, detail, foodType }: PropsType) {
+    async getTraditionalFoodCategory(page: number=0, { name, main, sub, detail, foodType }: PropsType) {
 
-        const conditions = [`%${name}%`, main, sub, detail, foodType]
+        const conditions = [`%${name}%`, `%${main}%`, `%${sub}%`, `%${detail}%`, `%${foodType}%`]
 
         try {
 
             const itemSelectQuery = `
             SELECT * FROM traditional_foods
-            WHERE name LIKE ? AND main_category =? AND sub_category = ? AND detail_category = ? AND food_type = ?
+            WHERE name LIKE ? AND main_category LIKE ? AND sub_category LIKE ? AND detail_category LIKE ? AND food_type LIKE ?
+            LIMIT 20 OFFSET 20 * ?
             `
 
             const countSelectQuery = `
             SELECT COUNT(*) AS count FROM traditional_foods
-            WHERE name LIKE ? AND main_category =? AND sub_category = ? AND detail_category = ? AND food_type = ?
-            
+            WHERE name LIKE ? AND main_category LIKE ? AND sub_category LIKE ? AND detail_category LIKE ? AND food_type LIKE ?
             `
-            const items = await dbOpen(true, itemSelectQuery, conditions)
+            const items = await dbOpen(true, itemSelectQuery, [...conditions, Math.max(0,page-1)])
             const { count: totalCount } = await dbOpen(false, countSelectQuery, conditions) as { count: string } || { totalCount: 0 }
             return { items, totalCount }
+
+  
         } catch (error) {
             console.error('/traditionalfood.model', error)
         }

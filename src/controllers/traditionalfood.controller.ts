@@ -12,13 +12,14 @@ export class TraditionalFoodController {
         this.model = model
     }
 
-    getTraditionalFoodCategory=async (req: Request, res:Response)=>{
-
+    getTraditionalFoodCategory = async (req: Request, res: Response) => {
         try {
-            const { name, main, sub, detail, food_type:foodType } = req.query as { name: string, main: string, sub: string, detail: string, food_type: string }
-            const {items, totalCount} = await this.model.getTraditionalFoodCategory({name, main, sub, detail,foodType}) || {items:[], totalCount:0}
-            
-            return res.status(200).json({items, totalCount})
+            const { name, main, sub, detail, food_type: foodType } = req.query as { name: string, main: string, sub: string, detail: string, food_type: string }
+            const page = Number(req.query.page) || 0
+
+            const { items, totalCount } = await this.model.getTraditionalFoodCategory(page, { name, main, sub, detail, foodType }) || { items: [], totalCount: 0 }
+
+            return res.status(200).json({ items, totalCount })
 
         } catch (error) {
             console.error('/traditionalfood.controller.ts', error)
