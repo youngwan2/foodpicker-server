@@ -1,0 +1,48 @@
+name: Deploy to cloudtype
+on:
+  push:
+    branches:
+      - deploy
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Connect deploy key
+        uses: cloudtype-github-actions/connect@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          ghtoken: ${{ secrets.GHP_TOKEN }}
+      - name: Deploy
+        uses: cloudtype-github-actions/deploy@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          project: qodna25/foodpicker-backend
+          stage: main
+          yaml: |
+            name: foodpick-server-private
+            app: node@20
+            options:
+              env:
+                - name: NODE_ENV
+                  value: production
+                - name: API_HOST
+                  secret: API_HOST
+                - name: API_PROTOCOL
+                  secret: API_PROTOCOL
+                - name: NAVER_CLIENT_ID
+                  secret: NAVER_CLIENT_ID
+                - name: NAVER_CLIENT_SECRET
+                  secret: NAVER_CLIENT_SECRET
+                - name: DB_PATH
+                  secret: DB_PATH
+              ports: "8001"
+              install: npm ci
+              build: npm run build
+              start: npm run start
+              buildenv: []
+            context:
+              git:
+                url: git@github.com:${{ github.repository }}.git
+                ref: ${{ github.ref }}
