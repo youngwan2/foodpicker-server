@@ -28,9 +28,9 @@ jobs:
                 - name: NODE_ENV
                   value: production
                 - name: API_HOST
-                  secret: API_HOST
+                  secret: ${{secrets.API_HOST}}
                 - name: API_PROTOCOL
-                  secret: API_PROTOCOL
+                  secret: ${{secrets.API_PROTOCOL}}
                 - name: NAVER_CLIENT_ID
                   secret: NAVER_CLIENT_ID
                 - name: NAVER_CLIENT_SECRET
