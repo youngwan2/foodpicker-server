@@ -4,7 +4,7 @@ import { LocalmarketModel } from "../models/localmarket.model";
 import { inject, injectable } from "inversify";
 
 
-const { API_HOST = 'localhost:3000', API_RPOTOCOL = 'http://' } = process.env
+const { API_HOST = 'localhost:3000', API_RPOTOCOL = 'https://' } = process.env
 
 @injectable()
 export class LocalMarketController {

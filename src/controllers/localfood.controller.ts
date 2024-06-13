@@ -3,7 +3,7 @@ import "reflect-metadata";
 import { LocalfoodModel } from "../models/localfood.model";
 import { inject, injectable } from "inversify";
 
-const { API_HOST = 'localhost:3000', API_PROTOCOL = 'http//' } = process.env
+const { API_HOST = 'localhost:3000', API_PROTOCOL = 'https//' } = process.env
 
 @injectable()
 export class LocalFoodController {
