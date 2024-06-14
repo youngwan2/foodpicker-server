@@ -4,7 +4,7 @@ import { LocalmarketModel } from "../models/localmarket.model";
 import { inject, injectable } from "inversify";
 
 
-const { API_HOST = 'localhost:3000', API_PPOTOCOL = 'http://' } = process.env
+const { API_HOST = 'localhost:3000', API_PROTOCOL = 'http://' } = process.env
 
 @injectable()
 export class LocalMarketController {
@@ -38,7 +38,7 @@ export class LocalMarketController {
             const { items, maxSize, totalCount } = await this.model.getLimitedLocalMarketDataFormDB(page, { regionShortcut, regionFull }) || { result: '', count: 0 }
 
             const isNextPage = maxSize >= Number(page)
-            const next = isNextPage ? API_PPOTOCOL + API_HOST + '/localmarkets?page=' + nextPage : null
+            const next = isNextPage ? API_PROTOCOL + API_HOST + '/localmarkets?page=' + nextPage : null
             return res.status(200).json({ items, totalCount, next })
 
         } catch (error) {
