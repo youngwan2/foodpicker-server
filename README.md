@@ -4,7 +4,7 @@
 ![제목을-입력해주세요_-002](https://github.com/youngwan2/food-picker/assets/107159871/947b9886-c3a7-440b-92cd-412b688aa1cb)
 
 - <변경 후: 2024.05.24 ~ >
-![제목을-입력해주세요_-003](https://github.com/youngwan2/food-picker/assets/107159871/1f499879-8d20-473d-b109-26cfdb4256d7)
+![main png](https://github.com/youngwan2/foodpicker-server/assets/107159871/675e49dc-0d09-44b0-b2ed-e3f704300b63)
 
 
 ## 🎫 프로젝트 목적
@@ -16,17 +16,11 @@
 - (2차 개발) 2024년 5월 24일 ~ 2024년 6월 12일
 - (유지보수) 2024년 6월 13일 ~
 
-
 ## 🔥 배포
-- ※ 24.06.11 기준으로 프론트엔드는 React + Vite + TS 환경에서 Github Actions + AWS S3 + CloudFront 기반의 배포가 진행되었습니다.
-- ※ 24.06.12 기준으로 백엔드는 NodeJS + TS + Express 환경에서 Github Actions + CloudType 플랫폼 기반으로 배포가 진행되었습니다.
+- 24.06.12 기준으로 백엔드는 NodeJS + TS + Express 환경에서 Github Actions + CloudType 플랫폼 기반으로 배포가 진행되었습니다(배포과정: https://duklook.tistory.com/554).
 
 - 루트 도메인: https://foodpick.co.kr/
 - 서브 도메인: https://www.foodpick.co.kr/
-
-## 🚬 트러블 슈팅
-- 프로젝트를 진행하면서 경험하게된 이슈를 모음집 형태로 정리해 보았습니다. 
-- [트러블 슈팅 1 ~ 4](https://duklook.tistory.com/444)
 
 ## 🧰 프레임워크 / 라이브러리 / 그 외 도구
 ### 프론트엔드/백엔드
