@@ -21,6 +21,9 @@
 
 - 루트 도메인: https://foodpick.co.kr/
 - 서브 도메인: https://www.foodpick.co.kr/
+- 배포 아키텍처
+![image](https://github.com/youngwan2/foodpicker-server/assets/107159871/cfb7f4f7-4efd-4c5f-bd05-3ce6840dc434)
+
 
 ## 🧰 프레임워크 / 라이브러리 / 그 외 도구
 ### 프론트엔드/백엔드
