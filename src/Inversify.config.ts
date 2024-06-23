@@ -9,6 +9,8 @@ import { NaverModel } from './models/naver.model';
 import { NaverController } from './controllers/naver.controller';
 import { NutritionModel } from './models/nutrition.model';
 import { NutritionController } from './controllers/nutrition.controller';
+import { AiModel } from './models/ai.model';
+import { AiController } from './controllers/ai.controller';
 
 /** memo: 의존성 주입자를 자동으로 생성해주는 IoC 컨테이너 역할을 해줌 */
 const container = new Container();
@@ -19,6 +21,7 @@ container.bind<LocalmarketModel>(LocalmarketModel).toSelf();
 container.bind<TraditionalFoodModel>(TraditionalFoodModel).toSelf();
 container.bind<NaverModel>(NaverModel).toSelf();
 container.bind<NutritionModel>(NutritionModel).toSelf();
+container.bind<AiModel>(AiModel).toSelf();
 
 // 컨트롤러 컨테이너
 container.bind<LocalFoodController>(LocalFoodController).toSelf();
@@ -26,6 +29,7 @@ container.bind<LocalMarketController>(LocalMarketController).toSelf();
 container.bind<TraditionalFoodController>(TraditionalFoodController).toSelf();
 container.bind<NaverController>(NaverController).toSelf();
 container.bind<NutritionController>(NutritionController).toSelf();
+container.bind<AiController>(AiController).toSelf();
 
 
 export { container }

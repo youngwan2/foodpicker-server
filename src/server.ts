@@ -9,6 +9,7 @@ import localmarket from './routes/localmarket.router';
 import nutrtion from './routes/nutrtion.router';
 import naver from './routes/naver.router';
 import traditionalfood from './routes/traditionalfood.router'
+import ai from './routes/ai.router'
 
 const app = express();
 
@@ -23,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // 라우터
-const routes = [localfood, localmarket, nutrtion, naver, traditionalfood];
+const routes = [localfood, localmarket, nutrtion, naver, traditionalfood, ai];
 
 routes.forEach((router) => {
   app.use('/', router);

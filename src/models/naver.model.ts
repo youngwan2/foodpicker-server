@@ -1,8 +1,6 @@
 import axios from "axios";
 import { injectable } from "inversify";
 
-
-
 const { NAVER_CLIENT_ID,
     NAVER_CLIENT_SECRET } = process.env
 
