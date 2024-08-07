@@ -22,7 +22,18 @@
 - 루트 도메인: https://foodpick.co.kr/
 - 서브 도메인: https://www.foodpick.co.kr/
 - 배포 아키텍처
-![image](https://github.com/youngwan2/foodpicker-server/assets/107159871/cfb7f4f7-4efd-4c5f-bd05-3ce6840dc434)
+```mermaid
+flowchart LR
+    A["Github Actions"] -->|레포지토리 소스 코드| B["Cloud Type"]
+    
+    B --> C
+    
+    C["내부적으로 소스파일을<br>도커 컨테이너화(이미지로<br>빌드) 후 서버에서 컨테이너를<br>실행하는 작업을 거침"]
+    
+    style A fill:#f0f0f0,stroke:#333,stroke-width:2px
+    style B fill:#f0f0f0,stroke:#333,stroke-width:2px
+    style C fill:#ffffff,stroke:#333,stroke-width:1px,stroke-dasharray: 5 5
+```
 
 
 ## 🧰 프레임워크 / 라이브러리 / 그 외 도구
